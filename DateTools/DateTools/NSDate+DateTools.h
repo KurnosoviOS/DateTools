@@ -22,7 +22,7 @@
 
 #ifndef DateToolsLocalizedStrings
 #define DateToolsLocalizedStrings(key) \
-NSLocalizedStringFromTableInBundle(key, @"DateTools", [NSBundle bundleWithPath:[[[NSBundle bundleForClass:[DTError class]] resourcePath] stringByAppendingPathComponent:@"DateTools.bundle"]], nil)
+NSLocalizedStringFromTableInBundle(key, ((languageCode) ? [NSString stringWithFormat:@"%@.lproj/DateTools", languageCode] : @"DateTools"), [NSBundle bundleWithPath:[[[NSBundle bundleForClass:[DTError class]] resourcePath] stringByAppendingPathComponent:@"DateTools.bundle"]], nil)
 #endif
 
 #import <Foundation/Foundation.h>
@@ -42,7 +42,7 @@ NSLocalizedStringFromTableInBundle(key, @"DateTools", [NSBundle bundleWithPath:[
 - (NSString *)timeAgoSinceDate:(NSDate *)date;
 - (NSString *)timeAgoSinceDate:(NSDate *)date numericDates:(BOOL)useNumericDates;
 - (NSString *)timeAgoSinceDate:(NSDate *)date numericDates:(BOOL)useNumericDates numericTimes:(BOOL)useNumericTimes;
-
+- (NSString *)timeAgoSinceDate:(NSDate *)date withLanguageCode:(NSString *)code;
 
 - (NSString *)shortTimeAgoSinceDate:(NSDate *)date;
 - (NSString *)weekTimeAgoSinceDate:(NSDate *)date;
@@ -184,4 +184,5 @@ NSLocalizedStringFromTableInBundle(key, @"DateTools", [NSBundle bundleWithPath:[
 #pragma mark - Helpers
 +(NSString *)defaultCalendarIdentifier;
 + (void)setDefaultCalendarIdentifier:(NSString *)identifier;
+    
 @end

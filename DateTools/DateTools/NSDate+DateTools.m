@@ -62,6 +62,7 @@ static const unsigned int allCalendarUnitFlags = NSCalendarUnitYear | NSCalendar
 
 static NSString *defaultCalendarIdentifier = nil;
 static NSCalendar *implicitCalendar = nil;
+static NSString *languageCode = nil;
 
 @implementation NSDate (DateTools)
 
@@ -125,6 +126,12 @@ static NSCalendar *implicitCalendar = nil;
 }
 
 - (NSString *)timeAgoSinceDate:(NSDate *)date{
+    return [self timeAgoSinceDate:date numericDates:NO];
+}
+
+- (NSString *)timeAgoSinceDate:(NSDate *)date withLanguageCode:(NSString *)code {
+    languageCode = code;
+    //NSLog(@"language code: %@", languageCode);
     return [self timeAgoSinceDate:date numericDates:NO];
 }
 
@@ -289,10 +296,10 @@ static NSCalendar *implicitCalendar = nil;
 }
 
 - (NSString *)getLocaleFormatUnderscoresWithValue:(double)value{
-    NSString *localeCode = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+    NSString *localeCode = (languageCode) ? languageCode : [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
     
     // Russian (ru) and Ukrainian (uk)
-    if([localeCode isEqualToString:@"ru-RU"] || [localeCode isEqualToString:@"uk"]) {
+    if([localeCode isEqualToString:@"ru"] || [localeCode isEqualToString:@"uk"]) {
         int XY = (int)floor(value) % 100;
         int Y = (int)floor(value) % 10;
         
